@@ -1,11 +1,16 @@
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
-var _client = _interopRequireDefault(require("react-dom/client"));
-var _lib = require("./lib");
+var _reactDom = _interopRequireDefault(require("react-dom"));
+var _Table = _interopRequireDefault(require("./lib/Table"));
 var _sampleData = _interopRequireDefault(require("./data/sample-data.json"));
+var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var root = _client.default.createRoot(document.getElementById('root'));
-root.render( /*#__PURE__*/_react.default.createElement(_react.default.StrictMode, null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_lib.Table, {
-  data: _sampleData.default
-}))));
+var root = _reactDom.default.createRoot(document.getElementById('root'));
+root.render( /*#__PURE__*/(0, _jsxRuntime.jsx)(_react.default.StrictMode, {
+  children: /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+    children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Table.default, {
+      data: _sampleData.default
+    })
+  })
+}));
