@@ -2,7 +2,7 @@
 
 var _react = _interopRequireDefault(require("react"));
 var _reactDom = _interopRequireDefault(require("react-dom"));
-var _Table = _interopRequireDefault(require("./lib/Table"));
+var _Table = _interopRequireDefault(require("./lib/Table.jsx"));
 var _sampleData = _interopRequireDefault(require("./data/sample-data.json"));
 var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
