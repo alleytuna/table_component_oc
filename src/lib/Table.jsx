@@ -1,24 +1,30 @@
-import { useState } from 'react';
-import './Table.css';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import React, { useState }  from "react";
+import './style.css';
 
 const Table = ({ data }) => {
-  const [tableHeaders, setTableHeaders] = useState(Object.keys(data[0]))
+  const [tableHeaders, setTableHeaders] = useState(
+    data.length ? Object.keys(data[0]) : []
+  );
   const [sortOrder, setSortOrder] = useState({});
   const [numberOfRowsDisplayed, setNumberOfRowsDisplayed] = useState(2);
-  const [searchWord, setSearchWord] = useState('');
+  const [searchWord, setSearchWord] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortedData, setSortedData] = useState(data.slice(0, numberOfRowsDisplayed));
+  const [sortedData, setSortedData] = useState(
+    data.length ? data.slice(0, numberOfRowsDisplayed) : []
+  );
 
   const totalPages = Math.ceil(data.length / numberOfRowsDisplayed);
 
   const handleSort = (column) => {
-    const sortDirection = sortOrder[column] === 'asc' ? 'desc' : 'asc';
+    const sortDirection = sortOrder[column] === "asc" ? "desc" : "asc";
     const sorted = data.sort((a, b) => {
       if (a[column] < b[column]) {
-        return sortDirection === 'asc' ? -1 : 1;
+        return sortDirection === "asc" ? -1 : 1;
       }
       if (a[column] > b[column]) {
-        return sortDirection === 'asc' ? 1 : -1;
+        return sortDirection === "asc" ? 1 : -1;
       }
       return 0;
     });
@@ -72,23 +78,32 @@ const Table = ({ data }) => {
       const end = start + numberOfRowsDisplayed;
       setSortedData(data.slice(start, end));
     }
-  }
+  };
 
   return (
-    <div className='allTable'>
-      <div className='accessoriesDisplay'>
-        <div className='numberOfPagesSelector'>
+    <div className="allTable">
+      <div className="accessoriesDisplay">
+        <div className="numberOfPagesSelector">
           <p>Show</p>
-          <select value={numberOfRowsDisplayed} onChange={handleNumberOfRowsDisplayed} className='selectEntriesAndSearchBarInput'>
+          <select
+            value={numberOfRowsDisplayed}
+            onChange={handleNumberOfRowsDisplayed}
+            className="selectEntriesAndSearchBarInput"
+          >
             <option value="2">2</option>
             <option value="4">4</option>
             <option value="6">6</option>
           </select>
           <p>entries</p>
         </div>
-        <div className='searchBar'>
+        <div className="searchBar">
           <p>Search:</p>
-          <input type="text" value={searchWord} onChange={handleSearch} className='selectEntriesAndSearchBarInput' />
+          <input
+            type="text"
+            value={searchWord}
+            onChange={handleSearch}
+            className="selectEntriesAndSearchBarInput"
+          />
         </div>
       </div>
       <table>
@@ -97,31 +112,56 @@ const Table = ({ data }) => {
             {tableHeaders.map((column) => (
               <th key={column} onClick={() => handleSort(column)}>
                 {column}
-                {sortOrder[column] === 'asc' ? <span>&#9650;</span> : <span>&#9660;</span>}
+                {sortOrder[column] === "asc" ? (
+                  <span>&#9650;</span>
+                ) : (
+                  <span>&#9660;</span>
+                )}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody>
-          {sortedData.map((item, index) => (
-            <tr key={index}>
-              {Object.keys(item).map((key) => (
-                <td key={key}>{item[key]}</td>
-              ))}
+        {sortedData && sortedData.length > 0 ? (
+          <tbody>
+            {sortedData.map((item, index) => (
+              <tr key={index}>
+                {Object.keys(item).map((key) => (
+                  <td key={key}>{item[key]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <tbody>
+            <tr>
+              <td colSpan={tableHeaders.length}>
+                There is no data to display.
+              </td>
             </tr>
-          ))}
-        </tbody>
+          </tbody>
+        )}
       </table>
-      <div className='accessoriesDisplay'>
-        <div className='showingEntriesText'>Showing {currentPage} to {totalPages} of {totalPages} entries</div>
-        <div className='pagesChanger'>
-          <button onClick={() => handlePrevPage()} >Previous</button>
-          <input type="text" placeholder={currentPage} value={currentPage} onChange={handleInputPage} />
+      <div className="accessoriesDisplay">
+        <div className="showingEntriesText">
+          Showing {currentPage} to {totalPages} of {totalPages} entries
+        </div>
+        <div className="pagesChanger">
+          <button onClick={() => handlePrevPage()}>Previous</button>
+          <input
+            type="text"
+            placeholder={currentPage}
+            value={currentPage}
+            onChange={handleInputPage}
+          />
           <button onClick={() => handleNextPage()}>Next</button>
         </div>
       </div>
     </div>
   );
+};
+
+Table.defaultProps = {
+  data: JSON,
 };
 
 export default Table;
